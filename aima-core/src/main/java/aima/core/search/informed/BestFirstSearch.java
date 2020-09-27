@@ -25,7 +25,7 @@ import java.util.function.ToDoubleFunction;
 public class BestFirstSearch<S, A> extends QueueBasedSearch<S, A> implements Informed<S, A> {
 
 	private final EvaluationFunction<S, A> evalFn;
-	
+
 	/**
 	 * Constructs a best first search from a specified search execution strategy and an
 	 * evaluation function.
@@ -40,11 +40,12 @@ public class BestFirstSearch<S, A> extends QueueBasedSearch<S, A> implements Inf
 	public BestFirstSearch(QueueSearch<S, A> impl, final EvaluationFunction<S, A> evalFn) {
 		super(impl, QueueFactory.createPriorityQueue(Comparator.comparing(evalFn::applyAsDouble)));
 		this.evalFn = evalFn;
+		impl.evalFn = evalFn;// Ejercicio 4
 	}
 
 	/** Modifies the evaluation function. */
 	@Override
 	public void setHeuristicFunction(ToDoubleFunction<Node<S, A>> h) {
-		 evalFn.setHeuristicFunction(h);
+		evalFn.setHeuristicFunction(h);
 	}
 }
