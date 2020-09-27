@@ -14,7 +14,9 @@ import java.util.stream.Stream;
  */
 public class EightPuzzleFunctions {
 
-	public static final EightPuzzleBoard GOAL_STATE = new EightPuzzleBoard(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 });
+	//public static final EightPuzzleBoard GOAL_STATE = new EightPuzzleBoard(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 });
+	//Ejercicio 1
+	public static final EightPuzzleBoard GOAL_STATE = new EightPuzzleBoard(new int[] { 1, 2, 3, 8, 0, 4, 7, 6, 5 });
 
 	public static List<Action> getActions(EightPuzzleBoard state) {
 		return Stream.of(EightPuzzleBoard.UP, EightPuzzleBoard.DOWN, EightPuzzleBoard.LEFT, EightPuzzleBoard.RIGHT).
@@ -37,7 +39,11 @@ public class EightPuzzleFunctions {
 		return result;
 	}
 
-	// Equivalente al h2 de la teoría.
+	/**
+	 * Equivalente al h2 de la teoría.
+	 * @param node
+	 * @return
+	 */
 	public static double getManhattanDistance(Node<EightPuzzleBoard, Action> node) {
 		EightPuzzleBoard currState = node.getState();
 		int result = 0;
@@ -50,7 +56,11 @@ public class EightPuzzleFunctions {
 		return result;
 	}
 
-	// Equivalente al h1 de la teoría.
+	/**
+	 * Equivalente al h1 de la teoría.
+	 * @param node
+	 * @return
+	 */
 	public static int getNumberOfMisplacedTiles(Node<EightPuzzleBoard, Action> node) {
 		EightPuzzleBoard currState = node.getState();
 		int result = 0;

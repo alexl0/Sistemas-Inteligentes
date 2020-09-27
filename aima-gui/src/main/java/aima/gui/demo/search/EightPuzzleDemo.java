@@ -31,15 +31,21 @@ public class EightPuzzleDemo {
 //	private static EightPuzzleBoard extreme =
 //			new EightPuzzleBoard(new int[] { 0, 8, 7, 6, 5, 4, 3, 2, 1 });
 
+	private static EightPuzzleBoard inicial =
+			new EightPuzzleBoard(new int[] { 
+					//1, 4, 2, 7, 5, 8, 3, 0, 6
+					6,2,7,4,5,1,0,8,3
+					});
+	
 	public static void main(String[] args) {
 		System.out.println("Initial State:\n" + boardWithThreeMoveSolution);
-		eightPuzzleDLSDemo();
-		eightPuzzleIDLSDemo();
-		eightPuzzleGreedyBestFirstDemo();
-		eightPuzzleGreedyBestFirstManhattanDemo();
+		//eightPuzzleDLSDemo();
+		//eightPuzzleIDLSDemo();
+		//eightPuzzleGreedyBestFirstDemo();
+		//eightPuzzleGreedyBestFirstManhattanDemo();
 		eightPuzzleAStarDemo();
-		eightPuzzleAStarManhattanDemo();
-		eightPuzzleSimulatedAnnealingDemo();
+		//eightPuzzleAStarManhattanDemo();
+		//eightPuzzleSimulatedAnnealingDemo();
 	}
 
 	private static void eightPuzzleDLSDemo() {
@@ -100,9 +106,12 @@ public class EightPuzzleDemo {
 	private static void eightPuzzleAStarDemo() {
 		System.out.println("\nEightPuzzleDemo AStar Search (MisplacedTileHeursitic)");
 		try {
-			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(random1);
+			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(
+					//random1
+					inicial
+					);
 			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>
-					(new GraphSearch<>(), EightPuzzleFunctions::getNumberOfMisplacedTiles);
+					(new GraphSearch<>(), EightPuzzleFunctions::getNumberOfMisplacedTiles); // A* y h1
 			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());
