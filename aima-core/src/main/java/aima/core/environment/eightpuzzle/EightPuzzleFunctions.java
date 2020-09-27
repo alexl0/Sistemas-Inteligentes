@@ -69,4 +69,11 @@ public class EightPuzzleFunctions {
 				result++;
 		return result;
 	}
+	
+	// Ejercicio 7
+	/**
+	 * Hacer un nuevo heurístico en el que 
+	 * para la ficha i(1 <= i <= 8) consideramos que el coste de moverla es 2^i
+	 */
+	
 }
