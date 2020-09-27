@@ -32,9 +32,14 @@ public abstract class QueueSearch<S, A> {
 	final protected NodeFactory<S, A> nodeFactory;
 	protected boolean earlyGoalTest = false;
 	protected Metrics metrics = new Metrics();
-	
+
 	// Ejercicio 4
 	public EvaluationFunction<S, A> evalFn;
+
+	// Ejercicio 5
+	public static final String METRIC_NODES_EXPANDED_REINSERTED_IN_FRONTIER = "nodesExpandedReinsertedInFrontier";
+	public static final String METRIC_NODES_DUPLICATED_IN_FRONTIER = "nodesDuplicatedInFrontier";
+	public static final String METRIC_TIME_TAKEN = "timeTaken";
 
 	/** Stores the provided node expander and adds a node listener to it. */
 	protected QueueSearch(NodeFactory<S, A> nodeFactory) {

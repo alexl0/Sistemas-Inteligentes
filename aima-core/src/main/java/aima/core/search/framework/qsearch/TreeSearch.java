@@ -1,5 +1,7 @@
 package aima.core.search.framework.qsearch;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Optional;
 import java.util.Queue;
 
@@ -65,6 +67,10 @@ public class TreeSearch<S, A> extends QueueSearch<S, A> {
 	public Optional<Node<S, A>> findNode(Problem<S, A> problem, Queue<Node<S, A>> frontier) {
 		this.frontier = frontier;
 		clearMetrics();
+
+		// Ejercicio 5
+		Instant start = Instant.now();
+
 		// initialize the frontier using the initial state of the problem
 		Node<S, A> root = nodeFactory.createNode(problem.getInitialState());
 		addToFrontier(root);
@@ -74,22 +80,39 @@ public class TreeSearch<S, A> extends QueueSearch<S, A> {
 		while (!isFrontierEmpty() && !Tasks.currIsCancelled()) {
 			// choose a leaf node and remove it from the frontier
 			Node<S, A> node = removeFromFrontier();
-			
+
 			// Ejercicio 4
 			if(evalFn !=null)
 				System.out.println("f-value" + evalFn.applyAsDouble(node));
-			
+
 			// if the node contains a goal state then return the corresponding solution
-			if (!earlyGoalTest && problem.testSolution(node))
+			if (!earlyGoalTest && problem.testSolution(node)) {
+
+				// Ejercicio 5
+				Instant finish = Instant.now();
+				metrics.set(METRIC_TIME_TAKEN, Duration.between(start, finish).toMillis());
+
 				return asOptional(node);
+			}
 
 			// expand the chosen node and add the successor nodes to the frontier
 			for (Node<S, A> successor : nodeFactory.getSuccessors(node, problem)) {
 				addToFrontier(successor);
-				if (earlyGoalTest && problem.testSolution(successor))
+				if (earlyGoalTest && problem.testSolution(successor)) {
+
+					// Ejercicio 5
+					Instant finish = Instant.now();
+					metrics.set(METRIC_TIME_TAKEN, Duration.between(start, finish).toMillis());
+
 					return asOptional(successor);
+				}
 			}
 		}
+
+		// Ejercicio 5
+		Instant finish = Instant.now();
+		metrics.set(METRIC_TIME_TAKEN, Duration.between(start, finish).toMillis());
+
 		// if the frontier is empty then return failure
 		return Optional.empty();
 	}
