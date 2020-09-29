@@ -17,9 +17,13 @@ public class BidirectionalEightPuzzleProblem extends GeneralProblem<EightPuzzleB
 	private final Problem<EightPuzzleBoard, Action> reverseProblem;
 
 	public BidirectionalEightPuzzleProblem(EightPuzzleBoard initialState) {
-		super(initialState, EightPuzzleFunctions::getActions, EightPuzzleFunctions::getResult,
-				Predicate.isEqual(EightPuzzleFunctions.GOAL_STATE));
 
+		// Ejercicio 7
+		//super(initialState, EightPuzzleFunctions::getActions, EightPuzzleFunctions::getResult,
+		//		Predicate.isEqual(EightPuzzleFunctions.GOAL_STATE));
+		super(initialState, EightPuzzleFunctions::getActions, EightPuzzleFunctions::getResult,
+				Predicate.isEqual(EightPuzzleFunctions.GOAL_STATE), EightPuzzleFunctions::stepCostFunction);
+		
 		reverseProblem = new GeneralProblem<>(EightPuzzleFunctions.GOAL_STATE,
 				EightPuzzleFunctions::getActions, EightPuzzleFunctions::getResult,
 				Predicate.isEqual(initialState));

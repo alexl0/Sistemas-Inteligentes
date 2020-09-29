@@ -111,7 +111,7 @@ public class EightPuzzleDemo {
 					inicial
 					);
 			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>
-					(new GraphSearch<>(), EightPuzzleFunctions::getManhattanDistance); // A* y h1 o h2 dependiendo del metodo que pasemos
+					(new GraphSearch<>(), EightPuzzleFunctions::getWeightedManhattanDistance); // A* y h1 o h2 dependiendo del metodo que pasemos
 			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
 			printActions(agent.getActions());
 			printInstrumentation(agent.getInstrumentation());

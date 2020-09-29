@@ -57,6 +57,23 @@ public class EightPuzzleFunctions {
 	}
 
 	/**
+	 * Equivalente al h2 de la teoría.
+	 * @param node
+	 * @return
+	 */
+	public static double getWeightedManhattanDistance(Node<EightPuzzleBoard, Action> node) {
+		EightPuzzleBoard currState = node.getState();
+		int result = 0;
+		for (int val = 1; val <= 8; val++) {
+			XYLocation locCurr = currState.getLocationOf(val);
+			XYLocation locGoal = GOAL_STATE.getLocationOf(val);
+			result += Math.abs(locGoal.getX() - locCurr.getX()) * Math.pow(2, val); // Ejercicio 7
+			result += Math.abs(locGoal.getY() - locCurr.getY()) * Math.pow(2, val);
+		}
+		return result;
+	}
+
+	/**
 	 * Equivalente al h1 de la teoría.
 	 * @param node
 	 * @return
@@ -69,11 +86,38 @@ public class EightPuzzleFunctions {
 				result++;
 		return result;
 	}
-	
+
+	/**
+	 * Equivalente al h1 de la teoría.
+	 * @param node
+	 * @return
+	 */
+	public static int getWeightedNumberOfMisplacedTiles(Node<EightPuzzleBoard, Action> node) {
+		EightPuzzleBoard currState = node.getState();
+		int result = 0;
+		for (int val = 1; val <= 8; val++)
+			if (!(currState.getLocationOf(val).equals(GOAL_STATE.getLocationOf(val))))
+				//result++;
+				result += Math.pow(2, val); // Ejercicio 7
+		return result;
+	}
+
 	// Ejercicio 7
 	/**
 	 * Hacer un nuevo heurístico en el que 
 	 * para la ficha i(1 <= i <= 8) consideramos que el coste de moverla es 2^i
 	 */
-	
+	public static double stepCostFunction(EightPuzzleBoard state, Action action, EightPuzzleBoard sucState) {
+		double cost=0;
+		XYLocation location=state.getLocationOf(0);
+		if(action==EightPuzzleBoard.UP)
+			cost=state.getValueAt(new XYLocation(location.getX(),location.getY()-1));
+		else if (action==EightPuzzleBoard.DOWN)
+			cost=state.getValueAt(new XYLocation(location.getX(),location.getY()+1));
+		else if (action==EightPuzzleBoard.LEFT)
+			cost=state.getValueAt(new XYLocation(location.getX()-1,location.getY()));
+		else if (action==EightPuzzleBoard.RIGHT)
+			cost=state.getValueAt(new XYLocation(location.getX()+1,location.getY()));
+		return Math.pow(2, cost);
+	}
 }
