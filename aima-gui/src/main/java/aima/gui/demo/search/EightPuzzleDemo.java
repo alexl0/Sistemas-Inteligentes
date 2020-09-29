@@ -115,10 +115,14 @@ public class EightPuzzleDemo {
 		//eightPuzzleAStarManhattanDemo();
 		//eightPuzzleAStarnonConsistentHeuristicDemo();
 
+		//Weight
 		//eightPuzzleAStarNullDemo();
 		//eightPuzzleAStarWeightedMisplacedDemo();
 		//eightPuzzleAStarWeightedManhattanDemo();
-		eightPuzzleAStarnonWeigthedConsistentHeuristicDemo();
+		//eightPuzzleAStarnonWeigthedConsistentHeuristicDemo();
+
+		//Epsilon
+		eightPuzzleAStarEpsilonWeightedManhattanDemo();
 
 	}
 
@@ -262,8 +266,22 @@ public class EightPuzzleDemo {
 		}
 	}
 
+	private static void eightPuzzleAStarEpsilonWeightedManhattanDemo() {
+		System.out.println("\nEightPuzzleDemo AStar Search (H2: ManhattanHeursitic)");
+		try {
+			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(inicial);
+			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>
+			(new GraphSearch<>(), EightPuzzleFunctions::getEpsilonWeightedManhattanDistance);
+			SearchAgent<Object, EightPuzzleBoard, Action> agent = new SearchAgent<>(problem, search);
+			printActions(agent.getActions());
+			printInstrumentation(agent.getInstrumentation());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	private static void eightPuzzleAStarnonConsistentHeuristicDemo() {
-		System.out.println("\nEightPuzzleDemo AStar Search (H1: MisplacedTileHeursitic)");
+		System.out.println("\nEightPuzzleDemo AStar Search (H3)");
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(inicial);
 			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>
@@ -277,7 +295,7 @@ public class EightPuzzleDemo {
 	}
 
 	private static void eightPuzzleAStarnonWeigthedConsistentHeuristicDemo() {
-		System.out.println("\nEightPuzzleDemo AStar Search (H1: MisplacedTileHeursitic)");
+		System.out.println("\nEightPuzzleDemo AStar Search (H3)");
 		try {
 			Problem<EightPuzzleBoard, Action> problem = new BidirectionalEightPuzzleProblem(inicial);
 			SearchForActions<EightPuzzleBoard, Action> search = new AStarSearch<>
