@@ -164,6 +164,8 @@ public class NQueensBoard {
 		return numberOfDiagonalAttacksOn(x, y) > 0;
 	}
 
+	// Heuristicos
+
 	private int numberOfHorizontalAttacksOn(int x, int y) {
 		int result = 0;
 		for (int col = 0; col < getSize(); col++) {
@@ -251,5 +253,35 @@ public class NQueensBoard {
 			builder.append("\n");
 		}
 		return builder.toString();
+	}
+
+	/**
+	 * practica3
+	 */
+	
+	/**
+	 * Estimation of the probability that a solution may be reached from a state
+	 * @return
+	 */
+	public double probabilisticEstimation() {
+		return ((double)(getSize() - getNumberOfQueensOnBoard()))*(1- P());
+	}
+
+	private double P() {
+		if(getNumberOfQueensOnBoard()==getSize())
+			return 1.0;
+		else
+			return (double)getNumberOfNonAttackedPositions() / Math.pow((double)((getSize()-getNumberOfQueensOnBoard())*getSize()),1.5);
+	}
+
+	private double getNumberOfNonAttackedPositions() {
+		int count=0;
+		for(int col=0;col<getSize();col++)
+			for(int row=0;row<getSize();row++) {
+				XYLocation l=new XYLocation(col, row);
+				if(!isSquareUnderAttack(l))
+					count++;
+			}
+		return count;
 	}
 }
