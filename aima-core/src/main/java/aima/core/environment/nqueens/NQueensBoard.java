@@ -258,15 +258,20 @@ public class NQueensBoard {
 	/**
 	 * practica3
 	 */
-	
+
 	/**
 	 * Estimation of the probability that a solution may be reached from a state
 	 * @return
 	 */
 	public double probabilisticEstimation() {
-		return ((double)(getSize() - getNumberOfQueensOnBoard()))*(1- P());
+		return ((double)(getSize() - getNumberOfQueensOnBoard()))/(1- P());
+		//return ((double)(getSize() - getNumberOfQueensOnBoard()))*(1- P());
 	}
 
+	/**
+	 * Función de probabilidad (puede haber una mejor)
+	 * @return
+	 */
 	private double P() {
 		if(getNumberOfQueensOnBoard()==getSize())
 			return 1.0;

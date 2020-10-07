@@ -31,7 +31,7 @@ public class NQueensDemo {
 
 	// N probar con varios valores de n, lo pone en el guion
 	// Es para tener más informacion para analizar los heuristicos
-	private static final int boardSize = 4;
+	private static final int boardSize = 8;
 
 	public static void main(String[] args) {
 		startNQueensDemo();
@@ -79,19 +79,19 @@ public class NQueensDemo {
 			System.out.println("\n--- NQueensDemo A* (complete state formulation, graph search 3e) ---");
 
 			//Version incremental
-			Problem<NQueensBoard, QueenAction> problem = NQueensFunctions.createIncrementalFormulationProblem(boardSize);
+			//Problem<NQueensBoard, QueenAction> problem = NQueensFunctions.createIncrementalFormulationProblem(boardSize);
 
 			//Version completa
-			//Problem<NQueensBoard, QueenAction> problem = NQueensFunctions.createCompleteStateFormulationProblem
-					//(boardSize, Config.QUEENS_IN_FIRST_ROW);
-					//(boardSize, Config.QUEENS_IN_EVERY_COL);
+			Problem<NQueensBoard, QueenAction> problem = NQueensFunctions.createCompleteStateFormulationProblem
+					//(boardSize, Config.QUEENS_IN_FIRST_ROW);//problema determinista
+					(boardSize, Config.QUEEN_IN_EVERY_COL);//problema estocaustico
 					//(boardSize, Config.EMPTY);//no usar
 
 			//Heuristico
 			SearchForActions<NQueensBoard, QueenAction> search = new AStarSearch<>
-			//(new GraphSearch<>(), NQueensFunctions::getNumberOfAttackingPairs);
+			(new GraphSearch<>(), NQueensFunctions::getNumberOfAttackingPairs);
 			//(new GraphSearch<>(), NQueensFunctions::getHeuristicProbabilisticEstimationOfSolution);
-			(new GraphSearch<>(), NQueensFunctions::getNullHeuristicEstimation);
+			//(new GraphSearch<>(), NQueensFunctions::getNullHeuristicEstimation);
 			Optional<List<QueenAction>> actions = search.findActions(problem);
 
 			actions.ifPresent(qActions -> qActions.forEach(System.out::println));
