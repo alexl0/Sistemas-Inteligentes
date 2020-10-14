@@ -48,9 +48,9 @@ public class NQueensDemo {
 		solveNQueensWithSimulatedAnnealingSearch();
 		solveNQueensWithHillClimbingSearch();
 		solveNQueensWithRandomWalk();
-		solveNQueensWithAStarSearch();
 		 */
-		solveNQueensWithGeneticAlgorithmSearch();
+		//solveNQueensWithGeneticAlgorithmSearch();
+		solveNQueensWithAStarSearch();
 	}
 
 	private static void solveNQueensWithDepthFirstSearch() {
@@ -80,18 +80,18 @@ public class NQueensDemo {
 			System.out.println("\n--- NQueensDemo A* (complete state formulation, graph search 3e) ---");
 
 			//Version incremental
-			//Problem<NQueensBoard, QueenAction> problem = NQueensFunctions.createIncrementalFormulationProblem(boardSize);
+			Problem<NQueensBoard, QueenAction> problem = NQueensFunctions.createIncrementalFormulationProblem(boardSize);
 
 			//Version completa
-			Problem<NQueensBoard, QueenAction> problem = NQueensFunctions.createCompleteStateFormulationProblem
+			//Problem<NQueensBoard, QueenAction> problem = NQueensFunctions.createCompleteStateFormulationProblem
 					//(boardSize, Config.QUEENS_IN_FIRST_ROW);//problema determinista
-					(boardSize, Config.QUEEN_IN_EVERY_COL);//problema estocaustico
+					//(boardSize, Config.QUEEN_IN_EVERY_COL);//problema estocaustico
 			//(boardSize, Config.EMPTY);//no usar
 
 			//Heuristico
 			SearchForActions<NQueensBoard, QueenAction> search = new AStarSearch<>
-			(new GraphSearch<>(), NQueensFunctions::getNumberOfAttackingPairs);
-			//(new GraphSearch<>(), NQueensFunctions::getHeuristicProbabilisticEstimationOfSolution);
+			//(new GraphSearch<>(), NQueensFunctions::getNumberOfAttackingPairs);
+			(new GraphSearch<>(), NQueensFunctions::getHeuristicProbabilisticEstimationOfSolution);
 			//(new GraphSearch<>(), NQueensFunctions::getNullHeuristicEstimation);
 			Optional<List<QueenAction>> actions = search.findActions(problem);
 
