@@ -131,6 +131,10 @@ public class GeneticAlgorithm<A> {
 
 		// repeat
 		int itCount = 0;
+		
+		//Ejercicio 1
+		
+		
 		do {
 			population = nextGeneration(population, fitnessFn);
 			bestIndividual = retrieveBestIndividual(population, fitnessFn);
@@ -248,6 +252,7 @@ public class GeneticAlgorithm<A> {
 			// add child to new_population
 			newPopulation.add(child);
 		}
+		//Ejercicio 5
 		notifyProgressTrackers(getIterations(), population);
 		return newPopulation;
 	}

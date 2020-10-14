@@ -27,6 +27,7 @@ import java.util.function.Predicate;
  * @author Ravi Mohan
  */
 
+@SuppressWarnings("unused")
 public class NQueensDemo {
 
 	// N probar con varios valores de n, lo pone en el guion
@@ -46,10 +47,10 @@ public class NQueensDemo {
 		solveNQueensWithIterativeDeepeningSearch();
 		solveNQueensWithSimulatedAnnealingSearch();
 		solveNQueensWithHillClimbingSearch();
-		solveNQueensWithGeneticAlgorithmSearch();
 		solveNQueensWithRandomWalk();
-		*/
 		solveNQueensWithAStarSearch();
+		 */
+		solveNQueensWithGeneticAlgorithmSearch();
 	}
 
 	private static void solveNQueensWithDepthFirstSearch() {
@@ -85,7 +86,7 @@ public class NQueensDemo {
 			Problem<NQueensBoard, QueenAction> problem = NQueensFunctions.createCompleteStateFormulationProblem
 					//(boardSize, Config.QUEENS_IN_FIRST_ROW);//problema determinista
 					(boardSize, Config.QUEEN_IN_EVERY_COL);//problema estocaustico
-					//(boardSize, Config.EMPTY);//no usar
+			//(boardSize, Config.EMPTY);//no usar
 
 			//Heuristico
 			SearchForActions<NQueensBoard, QueenAction> search = new AStarSearch<>
@@ -168,30 +169,33 @@ public class NQueensDemo {
 	private static void solveNQueensWithGeneticAlgorithmSearch() {
 		System.out.println("\n--- NQueensDemo GeneticAlgorithm ---");
 
+		//declarar constantes
+		final int popSize=50;
+		final double mutationProbability=0.15;
+		final int numberOfGenerations=100;
+
 		FitnessFunction<Integer> fitnessFunction = NQueensGenAlgoUtil.getFitnessFunction();
 		Predicate<Individual<Integer>> goalTest = NQueensGenAlgoUtil.getGoalTest();
+
 		// Generate an initial population
 		Set<Individual<Integer>> population = new HashSet<>();
 		for (int i = 0; i < 50; i++)
 			population.add(NQueensGenAlgoUtil.generateRandomIndividual(boardSize));
 
+		//Crear objeto
 		GeneticAlgorithm<Integer> ga = new GeneticAlgorithm<>(boardSize,
 				NQueensGenAlgoUtil.getFiniteAlphabetForBoardOfSize(boardSize), 0.15);
 
+		Individual<Integer> bestIndividual;
 		// Run for a set amount of time
-		Individual<Integer> bestIndividual = ga.geneticAlgorithm(population, fitnessFunction, goalTest, 1000L);
-		System.out.println("Max time 1 second, Best Individual:\n"
-				+ NQueensGenAlgoUtil.getBoardForIndividual(bestIndividual));
-		System.out.println("Board Size      = " + boardSize);
-		System.out.println("# Board Layouts = " + (new BigDecimal(boardSize)).pow(boardSize));
-		System.out.println("Fitness         = " + fitnessFunction.apply(bestIndividual));
-		System.out.println("Is Goal         = " + goalTest.test(bestIndividual));
-		System.out.println("Population Size = " + ga.getPopulationSize());
-		System.out.println("Iterations      = " + ga.getIterations());
-		System.out.println("Took            = " + ga.getTimeInMilliseconds() + "ms.");
+		//bestIndividual = ga.geneticAlgorithm(population, fitnessFunction, goalTest, 1000L);
 
 		// Run till goal is achieved
-		bestIndividual = ga.geneticAlgorithm(population, fitnessFunction, goalTest, 0L);
+		//bestIndividual = ga.geneticAlgorithm(population, fitnessFunction, goalTest, 0L);
+
+		//Run a number of iterations
+		bestIndividual=ga.geneticAlgorithm(population, fitnessFunction, numberOfGenerations);
+
 		System.out.println("");
 		System.out.println("Max time unlimited, Best Individual:\n" +
 				NQueensGenAlgoUtil.getBoardForIndividual(bestIndividual));
