@@ -49,8 +49,8 @@ public class NQueensDemo {
 		solveNQueensWithHillClimbingSearch();
 		solveNQueensWithRandomWalk();
 		 */
-		//solveNQueensWithGeneticAlgorithmSearch();
-		solveNQueensWithAStarSearch();
+		solveNQueensWithGeneticAlgorithmSearch();
+		//solveNQueensWithAStarSearch();
 	}
 
 	private static void solveNQueensWithDepthFirstSearch() {

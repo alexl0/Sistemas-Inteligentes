@@ -26,18 +26,32 @@ public class NQueensGenAlgoUtil {
 	public static FitnessFunction<Integer> getFitnessFunction() {
 		return new NQueensFitnessFunction();
 	}
-	
+
 	public static Predicate<Individual<Integer>> getGoalTest() {
 		return new NQueensGenAlgoGoalTest();
 	}
-	
+
 
 	public static Individual<Integer> generateRandomIndividual(int boardSize) {
 		List<Integer> individualRepresentation = new ArrayList<>();
 		for (int i = 0; i < boardSize; i++) {
-			individualRepresentation.add(new Random().nextInt(boardSize));
+			//individualRepresentation.add(new Random().nextInt(boardSize));
+			individualRepresentation.add(i);
 		}
-		return new Individual<>(individualRepresentation);
+		return new Individual<>((List<Integer>)(shuffle((ArrayList<Integer>)individualRepresentation)));//Sin repetición
+		//return new Individual<>(individualRepresentation);
+	}
+
+	private static ArrayList<Integer> shuffle(ArrayList<Integer> indRep) {
+		Random rnd=new Random();
+		for(int i=0;i<indRep.size();i++) {
+			int j=rnd.nextInt(indRep.size());
+			//Swapp indRep[i] and indRep[j]
+			Integer tmp=indRep.get(i);
+			indRep.set(i, indRep.get(j));
+			indRep.set(j, tmp);
+		}
+		return indRep;
 	}
 
 	public static Collection<Integer> getFiniteAlphabetForBoardOfSize(int size) {
@@ -49,7 +63,7 @@ public class NQueensGenAlgoUtil {
 
 		return fab;
 	}
-	
+
 	public static class NQueensFitnessFunction implements FitnessFunction<Integer> {
 
 		public double apply(Individual<Integer> individual) {
