@@ -170,9 +170,9 @@ public class NQueensDemo {
 		System.out.println("\n--- NQueensDemo GeneticAlgorithm ---");
 
 		//declarar constantes
-		final int popSize=50;
+		final int popSize=100;
 		final double mutationProbability=0.15;
-		final int numberOfGenerations=100;
+		final int numberOfGenerations=500;
 
 		FitnessFunction<Integer> fitnessFunction = NQueensGenAlgoUtil.getFitnessFunction();
 		Predicate<Individual<Integer>> goalTest = NQueensGenAlgoUtil.getGoalTest();

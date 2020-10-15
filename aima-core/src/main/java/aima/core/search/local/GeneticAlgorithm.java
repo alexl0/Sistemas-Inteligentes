@@ -274,7 +274,7 @@ public class GeneticAlgorithm<A> {
 		}
 		//Ejercicio 5 (Elitismo)
 		newPopulation.add(bestBefore);
-		
+
 		notifyProgressTrackers(getIterations(), population);
 		return newPopulation;
 	}
@@ -287,10 +287,20 @@ public class GeneticAlgorithm<A> {
 		Individual<A> selected = population.get(population.size() - 1);
 
 		// Determine all of the fitness values
+
+		//Ejercicio 6
+		double minFitness = Double.MAX_VALUE;
 		double[] fValues = new double[population.size()];
 		for (int i = 0; i < population.size(); i++) {
 			fValues[i] = fitnessFn.apply(population.get(i));
+			if (fValues[i] < minFitness) minFitness = fValues[i]; // buscamos el fitness del peor
 		}
+		for (int i = 0; i < population.size(); i++) {
+			fValues[i] -= minFitness;
+			fValues[i] = Math.pow(fValues[i], 2);
+		}
+
+
 		// Normalize the fitness values
 		fValues = Util.normalize(fValues);
 		double prob = random.nextDouble();
